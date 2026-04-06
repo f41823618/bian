@@ -116,11 +116,15 @@ def run_cycle():
         print("✅ 策略已推送至 Telegram 并更新 Excel")
     except Exception as e:
         print(f"AI 响应失败: {e}")
-
 def main():
-    while True:
-        run_cycle()
-        time.sleep(300) # 每 5 分钟分析一次
+    print("=" * 100)
+    print("  KuCoin 多币种技术指标监控启动...")
+    print("=" * 100)
+    try:
+        run_cycle() # 只运行一次
+        print("\n✅ 本次分析完成。")
+    except Exception as e:
+        print(f"  ❌ 运行错误: {e}")
 
 if __name__ == "__main__":
     main()
