@@ -2,7 +2,7 @@ name: Crypto AI Analysis
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # 每30分钟运行一次
+    - cron: '*/30 * * * *'  # 每 30 分钟运行一次
   workflow_dispatch:      # 允许手动触发
 
 jobs:
@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # 更新到 v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4  # 修正点在这里
+        uses: actions/setup-python@v5  # 更新到 v5
         with:
           python-version: '3.10'
 
@@ -26,4 +26,4 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-        run: python autotrader_ai.py  # 确保文件名与你仓库中的文件名一致
+        run: python autotrader_ai.py
