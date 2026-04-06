@@ -1,0 +1,28 @@
+name: Crypto AI Analysis
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # 每 15 分钟运行一次 (GitHub 免费版建议不要设置太频繁)
+  workflow_dispatch:      # 支持手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: pythons/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests pandas ta google-generativeai
+
+      - name: Run Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: python autotrader_ai.py
