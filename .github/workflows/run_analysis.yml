@@ -2,8 +2,8 @@ name: Crypto AI Analysis
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # 每 30 分钟运行一次 (GitHub 免费版建议不要设置太频繁)
-  workflow_dispatch:      # 支持手动触发
+    - cron: '*/30 * * * *'  # 每30分钟运行一次
+  workflow_dispatch:      # 允许手动触发
 
 jobs:
   build:
@@ -13,16 +13,17 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: pythons/setup-python@v4
+        uses: actions/setup-python@v4  # 修正点在这里
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install requests pandas ta google-generativeai
+        run: |
+          pip install requests pandas ta openpyxl google-generativeai tabulate numpy
 
-      - name: Run Script
+      - name: Run Analysis
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-        run: python autotrader_ai.py
+        run: python autotrader_ai.py  # 确保文件名与你仓库中的文件名一致
